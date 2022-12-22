@@ -6,40 +6,41 @@ import java.util.Scanner;
 
 public class App {
 
-    public static List<Integer> topKFrequent(int[] nums, int k) {
-        List<Integer> list = new ArrayList<>();
+    public static List<Integer> topKFrequent(int[] arr, int k) {
+        ArrayList<Integer> list = new ArrayList<>();
         int max = Integer.MIN_VALUE, min = Integer.MAX_VALUE;
-        for (int i = 0; i < nums.length; i++) {
-        	max = Math.max(nums[i], max);
-        	min = Math.min(nums[i], min);
+        for (int i = 0; i < arr.length; i++) {
+            max = Math.max(arr[i], max);
+            min = Math.min(arr[i], min);
         }
-        int[] res = new int[nums.length];
-        for (int i = 0; i < nums.length; i++) {
-        	res[nums[i] - min]++;
+        int[] freq = new int[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            freq[arr[i] - min]++;
         }
         for (int i = 0; i < k; i++) {
-        	int ran = rank(res);
-        	res[ran] = 0;
-        	list.add(ran + min);
+            int ran = frequent(freq);
+            freq[ran] = 0;
+            list.add(ran + min);
         }
         return list;
     }
-     static int rank(int[] res) {
-    	int max = 0, index = 0;
-    	for (int i = 0; i < res.length; i++) {
-    		if (res[i] > max) {
-    			index = i;
-    			max = res[i];
-    		}
-    	}
+    //how many each item frequent
+    static int frequent(int[] res) {
+        int max = 0, index = 0;
+        for (int i = 0; i < res.length; i++) {
+            if (res[i] > max) {
+                index = i;
+                max = res[i];
+            }
+        }
         return index;
     }
+
     public static void main(String[] args) throws Exception {
-        int min = 1;
-        int max = 1000;
+
         int sum = 0;
         float avg = 0;
-                Random rand = new Random();
+        Random rand = new Random();
 
         Scanner scan = new Scanner(System.in);
         System.out.println("Enter the length of array");
@@ -60,7 +61,8 @@ public class App {
             }
         }
         System.out.println(Arrays.toString(arr));
-        System.out.println("sum = " + sum);
-        System.out.println(" average = " + avg);
-        System.out.println(topKFrequent(arr, 3));    }
+        System.out.println("Sum of all the array items = " + sum);
+        System.out.println("Average of all the array items = " + avg);
+        System.out.println("Most frequent three numbers "+topKFrequent(arr, 3));
+    }
 }
